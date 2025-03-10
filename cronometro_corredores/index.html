@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro para Corredores</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cronómetro para Corredores</h1>
+
+        <!-- Sección para registrar el número de corredores -->
+        <div class="section">
+            <label for="numCorredores">Número de Corredores:</label>
+            <input type="number" id="numCorredores" min="1">
+            <button id="confirmarCorredores">Confirmar</button>
+        </div>
+
+        <!-- Sección para el cronómetro -->
+        <div class="section">
+            <h2 id="cronometro">00:00:00</h2>
+            <button id="iniciarCronometro">Iniciar Cronómetro</button>
+            <button id="finalizarCarrera">Finalizar Carrera</button>
+        </div>
+
+        <!-- Sección para registrar tiempos -->
+        <div class="section">
+            <label for="listaCorredores">Seleccione un corredor:</label>
+            <select id="listaCorredores"></select>
+            <button id="registrarTiempo">Registrar Tiempo</button>
+        </div>
+
+        <!-- Sección para mostrar resultados -->
+        <div class="section">
+            <h2>Resultados</h2>
+            <div id="resultados"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
