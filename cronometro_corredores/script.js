@@ -20,7 +20,7 @@ function actualizarCronometro() {
 document.getElementById('confirmarCorredores').addEventListener('click', () => {
     const numCorredores = parseInt(document.getElementById('numCorredores').value);
     if (isNaN(numCorredores) || numCorredores < 1) {
-        alert('Por favor, ingrese un número válido de corredores.');
+        mostrarMensaje('Por favor, ingrese un número válido de corredores.');
         return;
     }
 
@@ -40,8 +40,7 @@ document.getElementById('confirmarCorredores').addEventListener('click', () => {
         option.textContent = nombre;
         listaCorredores.appendChild(option);
     }
-
-    alert(`${numCorredores} corredores registrados.`);
+    mostrarMensaje(`${numCorredores} corredores registrados.`);
 });
 
 // Iniciar el cronómetro
@@ -50,7 +49,7 @@ document.getElementById('iniciarCronometro').addEventListener('click', () => {
         cronometroIniciado = true;
         inicioTiempo = Date.now();
         intervalo = setInterval(actualizarCronometro, 1000);
-        alert('Cronómetro iniciado.');
+        mostrarMensaje('Cronómetro iniciado.');
     }
 });
 
@@ -58,16 +57,16 @@ document.getElementById('iniciarCronometro').addEventListener('click', () => {
 document.getElementById('registrarTiempo').addEventListener('click', () => {
     const corredorSeleccionado = document.getElementById('listaCorredores').value;
     if (!corredorSeleccionado) {
-        alert('Seleccione un corredor para registrar el tiempo.');
+        mostrarMensaje('Seleccione un corredor para registrar el tiempo.');
         return;
     }
 
     if (cronometroIniciado) {
         const tiempoActual = (Date.now() - inicioTiempo) / 1000; // Tiempo en segundos
         tiempos[corredorSeleccionado].push(tiempoActual);
-        alert(`Tiempo registrado para ${corredorSeleccionado}: ${tiempoActual.toFixed(2)} segundos.`);
+        mostrarMensaje(`Tiempo registrado para ${corredorSeleccionado}: ${tiempoActual.toFixed(2)} segundos.`);
     } else {
-        alert('El cronómetro no ha sido iniciado.');
+        mostrarMensaje('El cronómetro no ha sido iniciado.');
     }
 });
 
@@ -76,10 +75,12 @@ document.getElementById('finalizarCarrera').addEventListener('click', () => {
     if (cronometroIniciado) {
         clearInterval(intervalo);
         cronometroIniciado = false;
-        alert('Carrera finalizada. Mostrando resultados...');
+        mostrarMensaje('Carrera finalizada. Mostrando resultados...');
         mostrarResultados();
+        const reiniciar = document.getElementById('reiniciarCronometro');
+        reiniciar.style.display = "block";
     } else {
-        alert('El cronómetro no ha sido iniciado.');
+        mostrarMensaje('El cronómetro no ha sido iniciado.');
     }
 });
 
@@ -94,4 +95,28 @@ function mostrarResultados() {
             resultadosDiv.innerHTML += `<p>Vuelta ${index + 1}: ${tiempo.toFixed(2)} segundos</p>`;
         });
     }
+}
+
+function reiniciarCronometro() {
+    clearInterval(intervalo);
+    cronometroIniciado = false;
+    inicioTiempo = null;
+    document.getElementById('cronometro').textContent = '00:00:00';
+    mostrarMensaje('Cronómetro reiniciado.');
+    tiempos = {};
+    for (const corredor of corredores) {
+        tiempos[corredor] = [];
+    }
+    const resultadosDiv = document.getElementById('resultados');
+    resultadosDiv.innerHTML = '';
+    mostrarMensaje('');
+    const reinicar = document.getElementById('reiniciarCronometro');
+    reinicar.style.display = "none";
+}
+
+function mostrarMensaje(texto) {
+    const mensajeDiv = document.getElementById('mensaje');
+    mensajeDiv.textContent = texto;
+    mensajeDiv.style.fontSize = "20px";
+    mensajeDiv.style.color = "green";
 }

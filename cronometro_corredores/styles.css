@@ -47,6 +47,11 @@ button {
     cursor: pointer;
 }
 
+.numCorredores {
+    width: 10% !important;
+    display: inline-block;
+}
+
 button:hover {
     background-color: #218838;
 }
